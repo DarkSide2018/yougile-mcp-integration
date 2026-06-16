@@ -1,0 +1,18 @@
+server:
+  port: ${SERVER_PORT:8081}
+
+spring:
+  ai:
+    mcp:
+      server:
+        enabled: true
+        name: yougile-mcp-server
+        version: 1.0.0
+        transport: STREAMABLE
+        sse:
+          port: ${SERVER_PORT:8081}
+
+yougile:
+  api:
+    key: ${YOUGILE_API_KEY}
+    base-url: ${YOUGILE_API_BASE_URL:https://yougile.com/api-v2}

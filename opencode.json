@@ -1,0 +1,15 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "mcp": {
+    "yougile": {
+      "type": "local",
+      "command": ["java", "-jar", "mcp-server/build/libs/mcp-server.jar"],
+      "enabled": true,
+      "environment": {
+        "YOUGILE_API_KEY": "${YOUGILE_API_KEY}",
+        "YOUGILE_API_BASE_URL": "${YOUGILE_API_BASE_URL}",
+        "SERVER_PORT": "8081"
+      }
+    }
+  }
+}
