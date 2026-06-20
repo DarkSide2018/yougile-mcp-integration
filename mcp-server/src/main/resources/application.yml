@@ -14,5 +14,5 @@ spring:
 
 yougile:
   api:
-    key: ${YOUGILE_API_KEY}
+    key: ${YOUGILE_API_KEY:hX-SLTywqax7lTDimL4dvvKepwhQNUIRzmHXfz-EoO4Ar7wPgqnlR-tEoP1xVuiB}
     base-url: ${YOUGILE_API_BASE_URL:https://yougile.com/api-v2}

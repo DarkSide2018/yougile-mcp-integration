@@ -3,6 +3,12 @@ server:
 
 spring:
   ai:
+    ollama:
+      base-url: http://127.0.0.1:11434
+      embedding:
+        enabled: true # Включить автоконфигурацию для эмбеддингов (включено по умолчанию)[reference:13]
+        options:
+          model: qwen3-embedding:8b # Имя загруженной модели[reference:14][reference:15]
     mcp:
       client:
         enabled: true
@@ -14,11 +20,11 @@ spring:
             yougile-mcp:
               url: ${MCP_SERVER_URL:http://localhost:8081}
     openai:
-      api-key: ${OPENCODE_API_KEY}
-      base-url: ${OPENCODE_BASE_URL:https://zen.opencode.ai/v1}
+      api-key: ${OPENCODE_API_KEY:e0965efdf6c24e2899280d82ea51fd23.TB5HCDh1ff-uG43U0TwDivaZ}
+      base-url: ${OLLAMA_BASE_URL:http://127.0.0.1:11434}
       chat:
         options:
-          model: ${OPENCODE_MODEL:opencode-zen-1}
+          model: ${OPENCODE_MODEL:qwen3-embedding:8b}
     vectorstore:
       pgvector:
         index-type: HNSW
@@ -40,11 +46,11 @@ spring:
 
 telegram:
   bot:
-    token: ${TELEGRAM_BOT_TOKEN}
+    token: 8684989309:AAFKbXiM_81o9a-GaGpCOYDt2msxKSO_RWk
 
 yougile:
   api:
-    key: ${YOUGILE_API_KEY}
+    key: ${YOUGILE_API_KEY:hX-SLTywqax7lTDimL4dvvKepwhQNUIRzmHXfz-EoO4Ar7wPgqnlR-tEoP1xVuiB"}
     base-url: ${YOUGILE_API_BASE_URL:https://yougile.com/api-v2}
   default:
     column-id: ${YOUGILE_DEFAULT_COLUMN_ID}

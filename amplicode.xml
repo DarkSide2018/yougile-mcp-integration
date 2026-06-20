@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+    <component name="AmplicodePersistenceUnitSettings">
+        <persistence-units>
+            <persistence-unit moduleName="yougile-alert-bot.alert-bot-app.main" name="Default"/>
+        </persistence-units>
+    </component>
+</project>
