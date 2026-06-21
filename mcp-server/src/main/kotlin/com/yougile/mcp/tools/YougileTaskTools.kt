@@ -1,7 +1,7 @@
 package com.yougile.mcp.tools
 
-import org.springframework.ai.tool.annotation.Tool
-import org.springframework.ai.tool.annotation.ToolParam
+import org.springaicommunity.mcp.annotation.McpTool
+import org.springaicommunity.mcp.annotation.McpToolParam
 import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.client.WebClient
 import org.springframework.web.reactive.function.client.bodyToMono
@@ -10,11 +10,11 @@ import org.springframework.web.reactive.function.client.bodyToMono
 class YougileTaskTools(
     private val yougileWebClient: WebClient
 ) {
-    @Tool(name = "create_yougile_task", description = "Create a new task in YouGile")
+    @McpTool(name = "create_yougile_task", description = "Create a new task in YouGile")
     fun createYougileTask(
-        @ToolParam(description = "Task title") title: String,
-        @ToolParam(description = "Task description") description: String,
-        @ToolParam(description = "Column ID to place the task in") columnId: String
+        @McpToolParam(description = "Task title") title: String,
+        @McpToolParam(description = "Task description") description: String,
+        @McpToolParam(description = "Column ID to place the task in") columnId: String
     ): String {
         val body = mapOf(
             "title" to title,
@@ -33,7 +33,7 @@ class YougileTaskTools(
         return "Task created successfully. ID: $taskId"
     }
 
-    @Tool(name = "list_yougile_boards", description = "List all boards in YouGile")
+    @McpTool(name = "list_yougile_boards", description = "List all boards in YouGile")
     fun listYougileBoards(): String {
         val response = yougileWebClient.get()
             .uri("/boards")
@@ -55,7 +55,7 @@ class YougileTaskTools(
         }
     }
 
-    @Tool(name = "list_yougile_users", description = "List all users in YouGile")
+    @McpTool(name = "list_yougile_users", description = "List all users in YouGile")
     fun listYougileUsers(): String {
         val response = yougileWebClient.get()
             .uri("/users")
@@ -77,9 +77,9 @@ class YougileTaskTools(
         }
     }
 
-    @Tool(name = "list_yougile_columns", description = "List columns for a specific board")
+    @McpTool(name = "list_yougile_columns", description = "List columns for a specific board")
     fun listYougileColumns(
-        @ToolParam(description = "Board ID to list columns for") boardId: String
+        @McpToolParam(description = "Board ID to list columns for") boardId: String
     ): String {
         val board = yougileWebClient.get()
             .uri("/boards/{id}", boardId)

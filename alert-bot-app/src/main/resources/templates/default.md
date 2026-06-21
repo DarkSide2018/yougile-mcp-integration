@@ -7,10 +7,10 @@ tags: [alert, general]
 # Generic Alert
 
 ## Description
-{description}
+@description@
 
 ## Source
-{source}
+@source@
 
 ## Recommended Actions
 1. Investigate the alert details
@@ -18,5 +18,5 @@ tags: [alert, general]
 3. Apply appropriate fix or escalate
 
 ## Task Details
-- **Source:** {source}
-- **Time:** {timestamp}
+- **Source:** @source@
+- **Time:** @timestamp@

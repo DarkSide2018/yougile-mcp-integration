@@ -8,9 +8,7 @@ spring:
         enabled: true
         name: yougile-mcp-server
         version: 1.0.0
-        transport: STREAMABLE
-        sse:
-          port: ${SERVER_PORT:8081}
+        protocol: STREAMABLE
 
 yougile:
   api:

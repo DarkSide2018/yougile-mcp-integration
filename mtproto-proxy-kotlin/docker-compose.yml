@@ -1,0 +1,11 @@
+version: '3.8'
+services:
+  mtproto-proxy:
+    build: .
+    restart: unless-stopped
+    network_mode: "host"
+    logging:
+        driver: "json-file"
+        options:
+            max-file: "10"
+            max-size: "10m"

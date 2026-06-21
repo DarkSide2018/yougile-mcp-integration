@@ -1,35 +1,34 @@
 package com.yougile.alertbot.service
 
 import com.yougile.alertbot.model.Alert
-import org.springframework.ai.chat.model.ChatModel
-import org.springframework.ai.chat.prompt.PromptTemplate
+import org.springframework.ai.chat.messages.UserMessage
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 
 @Service
 class AlertProcessingService(
     private val openCodeService: OpenCodeService,
-    private val chatModel: ChatModel,
-    @Value("\${yougile.default.column-id}") private val defaultColumnId: String
+    private val chatModel: org.springframework.ai.chat.model.ChatModel,
+    @Value("\${yougile.default.column-id}")
+    private val defaultColumnId: String
 ) {
     fun processAlert(alert: Alert): String {
         val analysis = openCodeService.analyzeAlert(alert)
 
-        val mcpPrompt = PromptTemplate("""
+        val promptText = """
             Create a YouGile task with the following details:
             
-            Title: {title}
-            Description: {description}
-            Column ID: {columnId}
+            Title: __TITLE__
+            Description: __DESCRIPTION__
+            Column ID: __COLUMN_ID__
             
             Use the create_yougile_task tool to create this task.
-        """.trimIndent())
+        """.trimIndent()
+            .replace("__TITLE__", analysis.title)
+            .replace("__DESCRIPTION__", analysis.description)
+            .replace("__COLUMN_ID__", defaultColumnId)
 
-        val message = mcpPrompt.createMessage(mapOf(
-            "title" to analysis.title,
-            "description" to analysis.description,
-            "columnId" to defaultColumnId
-        ))
+        val message = UserMessage(promptText)
 
         val mcpResponse = chatModel.call(message)
 
@@ -39,7 +38,7 @@ class AlertProcessingService(
             Category: ${analysis.category}
             Priority: ${analysis.priority}
             
-            ${mcpResponse.toString()}
+            ${mcpResponse}
         """.trimIndent()
     }
 }

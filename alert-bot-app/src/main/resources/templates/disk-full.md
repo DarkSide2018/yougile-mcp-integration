@@ -7,7 +7,7 @@ tags: [storage, disk, capacity]
 # Disk Space Alert
 
 ## Description
-Disk {mount} on {host} is at {value}% capacity ({used}/{total}). Only {free}GB remaining.
+Disk @mount@ on @host@ is at @value@% capacity (@used@/@total@). Only @free@GB remaining.
 
 ## Impact
 - Applications may fail to write logs or data
@@ -21,6 +21,6 @@ Disk {mount} on {host} is at {value}% capacity ({used}/{total}). Only {free}GB r
 4. Consider adding storage or clearing old backups
 
 ## Task Details
-- **Mount:** {mount}
-- **Usage:** {used} / {total}
-- **Free:** {free}GB
+- **Mount:** @mount@
+- **Usage:** @used@ / @total@
+- **Free:** @free@GB

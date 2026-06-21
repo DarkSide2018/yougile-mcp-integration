@@ -3,14 +3,15 @@ package com.yougile.alertbot.service
 import com.yougile.alertbot.model.Alert
 import com.yougile.alertbot.model.AlertPriority
 import com.yougile.alertbot.rag.KnowledgeBaseService
-import org.springframework.ai.chat.model.ChatModel
-import org.springframework.ai.chat.prompt.PromptTemplate
+import org.springframework.ai.chat.messages.Message
+import org.springframework.ai.chat.messages.UserMessage
+import org.springframework.ai.ollama.OllamaChatModel
 import org.springframework.stereotype.Service
 import java.util.regex.Pattern
 
 @Service
 class OpenCodeService(
-    private val chatModel: ChatModel,
+    private val chatModel: OllamaChatModel,
     private val knowledgeBaseService: KnowledgeBaseService
 ) {
     fun analyzeAlert(alert: Alert): AlertAnalysis {
@@ -21,7 +22,7 @@ class OpenCodeService(
             "No similar templates found."
         }
 
-        val prompt = PromptTemplate("""
+        val promptText = """
             Analyze this alert and determine:
             - priority (CRITICAL, HIGH, MEDIUM, LOW)
             - category (infrastructure, security, application, database, network)
@@ -29,9 +30,9 @@ class OpenCodeService(
             - suggested description (detailed)
             
             Alert text:
-            {alert}
+            __ALERT__
             
-            {templates}
+            __TEMPLATES__
             
             Respond in JSON format:
             {
@@ -40,12 +41,11 @@ class OpenCodeService(
               "title": "...",
               "description": "..."
             }
-        """.trimIndent())
+        """.trimIndent()
+            .replace("__ALERT__", alert.text)
+            .replace("__TEMPLATES__", templateContext)
 
-        val message = prompt.createMessage(mapOf(
-            "alert" to alert.text,
-            "templates" to templateContext
-        ))
+        val message = UserMessage(promptText)
 
         val response = chatModel.call(message)
         val content = response.toString()

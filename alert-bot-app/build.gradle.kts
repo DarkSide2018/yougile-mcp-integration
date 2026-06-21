@@ -49,6 +49,4 @@ tasks.withType<Test> {
     useJUnitPlatform()
 }
 
-springBoot {
-    mainClass = "com.yougile.alertbot.AlertBotApplication"
-}
+

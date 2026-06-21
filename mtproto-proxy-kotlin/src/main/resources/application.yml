@@ -1,0 +1,18 @@
+mtproto-proxy:
+  port: 8443
+  host: ""
+  secret: "ee8375924619038475629103847562910436322e3230342e34322e3237"
+  tls-domain: "https://selectel.ru"
+  ad-tag: ""
+  modes:
+    classic: false
+    secure: false
+    tls: true
+  socks:
+    enabled: true
+    port: 1080
+    host: "127.0.0.1"
+
+spring:
+  main:
+    web-application-type: none
