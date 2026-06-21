@@ -2,16 +2,24 @@ server:
   port: ${SERVER_PORT:8080}
 
 spring:
+  main:
+    allow-bean-definition-overriding: true
+  autoconfigure:
+    exclude:
+      - org.springframework.ai.model.ollama.autoconfigure.OllamaApiAutoConfiguration
   ai:
+    model:
+      embedding: ollama
+      chat: ollama
     ollama:
       chat:
         options:
           model: qwen3.5:2b
-      base-url: http://127.0.0.1:11434
+      base-url: http://localhost:11434
       embedding:
-        enabled: true # Включить автоконфигурацию для эмбеддингов (включено по умолчанию)[reference:13]
+        enabled: true
         options:
-          model: qwen3-embedding:8b # Имя загруженной модели[reference:14][reference:15]
+          model: qwen3-embedding:8b
     mcp:
       client:
         enabled: true
@@ -51,7 +59,7 @@ telegram:
 
 yougile:
   api:
-    key: ${YOUGILE_API_KEY:hX-SLTywqax7lTDimL4dvvKepwhQNUIRzmHXfz-EoO4Ar7wPgqnlR-tEoP1xVuiB"}
+    key: ${YOUGILE_API_KEY:jeffSEZnASdXC-kawbSJFE0nrZ5Y0Bobn+5jelGUr77vVnGNy-S6vmSpKYQ9yNK7"}
     base-url: ${YOUGILE_API_BASE_URL:https://yougile.com/api-v2}
   default:
     column-id: ${YOUGILE_DEFAULT_COLUMN_ID:backlog}

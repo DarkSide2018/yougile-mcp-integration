@@ -2,17 +2,19 @@ package com.yougile.alertbot.service
 
 import com.yougile.alertbot.model.Alert
 import com.yougile.alertbot.model.AlertPriority
+import com.yougile.alertbot.ollama.ChatRequest
+import com.yougile.alertbot.ollama.Message
+import com.yougile.alertbot.ollama.OllamaClient
 import com.yougile.alertbot.rag.KnowledgeBaseService
-import org.springframework.ai.chat.messages.Message
-import org.springframework.ai.chat.messages.UserMessage
-import org.springframework.ai.ollama.OllamaChatModel
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 import java.util.regex.Pattern
 
 @Service
 class OpenCodeService(
-    private val chatModel: OllamaChatModel,
-    private val knowledgeBaseService: KnowledgeBaseService
+    private val ollamaClient: OllamaClient,
+    private val knowledgeBaseService: KnowledgeBaseService,
+    @Value("\${ollama.model:qwen3.5:2b}") private val modelName: String
 ) {
     fun analyzeAlert(alert: Alert): AlertAnalysis {
         val similarTemplates = knowledgeBaseService.findSimilarTemplates(alert.text)
@@ -45,10 +47,13 @@ class OpenCodeService(
             .replace("__ALERT__", alert.text)
             .replace("__TEMPLATES__", templateContext)
 
-        val message = UserMessage(promptText)
+        val request = ChatRequest(
+            model = modelName,
+            messages = listOf(Message(role = "user", content = promptText))
+        )
 
-        val response = chatModel.call(message)
-        val content = response.toString()
+        val response = ollamaClient.chat(request)
+        val content = response.message?.content ?: ""
         return parseResponse(content)
     }
 
