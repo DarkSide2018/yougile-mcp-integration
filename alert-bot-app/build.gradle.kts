@@ -52,4 +52,11 @@ tasks.withType<Test> {
     useJUnitPlatform()
 }
 
+tasks.register<JavaExec>("evalAgent") {
+    group = "verification"
+    description = "Runs the Next-Gen AI Agent Evaluation & Quality Benchmark Harness"
+    classpath = sourceSets["main"].runtimeClasspath
+    mainClass.set("com.yougile.alertbot.harness.cli.AgentHarnessCli")
+}
+
 

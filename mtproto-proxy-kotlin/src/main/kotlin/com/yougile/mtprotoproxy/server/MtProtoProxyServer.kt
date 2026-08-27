@@ -2,7 +2,6 @@ package com.yougile.mtprotoproxy.server
 
 import com.yougile.mtprotoproxy.config.ProxyConfig
 import com.yougile.mtprotoproxy.handler.HandshakeHandler
-import com.yougile.mtprotoproxy.handler.socks5.Socks5Handler
 import io.netty.bootstrap.ServerBootstrap
 import io.netty.channel.Channel
 import io.netty.channel.ChannelInitializer
@@ -58,28 +57,7 @@ class MtProtoProxyServer(private val config: ProxyConfig) {
 
     private fun startSocks() {
         if (!config.socks.enabled) return
-
-        println("SOCKS5 proxy starting on ${config.socks.host}:${config.socks.port}")
-
-        val b = ServerBootstrap()
-            .group(bossGroup, workerGroup)
-            .channel(NioServerSocketChannel::class.java)
-            .childHandler(object : ChannelInitializer<SocketChannel>() {
-                override fun initChannel(ch: SocketChannel) {
-                    ch.pipeline().addLast(Socks5Handler())
-                }
-            })
-            .option(ChannelOption.SO_BACKLOG, 128)
-            .childOption(ChannelOption.TCP_NODELAY, true)
-            .childOption(ChannelOption.SO_KEEPALIVE, true)
-
-        try {
-            val future = b.bind(config.socks.host, config.socks.port).sync()
-            socksChannel = future.channel()
-            println("SOCKS5 listening on ${config.socks.host}:${config.socks.port}")
-        } catch (e: Exception) {
-            System.err.println("Failed to start SOCKS5 proxy: ${e.message}")
-        }
+        println("SOCKS5 proxy is currently not configured.")
     }
 
     @PreDestroy

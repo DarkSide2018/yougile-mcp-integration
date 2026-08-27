@@ -2,11 +2,7 @@
 <project version="4">
   <component name="AmplicodePersistenceUnitSettings">
     <persistence-units>
-      <persistence-unit moduleName="yougile-alert-bot.alert-bot-app.main" name="Default">
-        <packages>
-          <package value="com.yougile.alertbot" />
-        </packages>
-      </persistence-unit>
+      <persistence-unit moduleName="yougile-alert-bot.alert-bot-app.main" name="Default" />
     </persistence-units>
   </component>
 </project>
